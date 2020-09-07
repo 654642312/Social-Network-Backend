@@ -1,10 +1,10 @@
-import { model, Schema, Document  } from 'mongoose';
+import { model, Schema, Document  } from 'mongoose'
 
 export interface IPost extends Document {
-   userName: 'string';
-   description: 'string';
-   imgUser: 'string';
-   imgPost: 'string'; 
+   userName: string
+   description: string
+   imgUser: string
+   imgPost: string
 }
 
 const PostSchema = new Schema({
@@ -28,4 +28,4 @@ const PostSchema = new Schema({
 });
 
 
-export default model<IPost>('post',PostSchema);
+export default model<IPost>('post',PostSchema)
