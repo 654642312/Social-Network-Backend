@@ -28,10 +28,13 @@ exports.getOnePost = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     return res.status(400).json({ 'message': 'error' });
 });
 exports.createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { username, description, imgUser, imgPost } = req.body;
-    const imagePath = '/uploads/' + req.file.fieldname;
+    console.log(req.body);
+    const { userId, description } = req.body;
+    const imgPath = '/uploads/' + req.file.filename;
     const newPost = new post_1.default({
-        username, description, imgUser, imgPost
+        userId,
+        description,
+        imgPath
     });
     yield newPost.save();
     return res.status(200).json({ 'message': 'save successfully' });
@@ -43,8 +46,7 @@ exports.updatePost = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 exports.deletePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const post = yield post_1.default.findByIdAndDelete(req.params.id);
     if (post !== null) {
-        fs_extra_1.unlink(path_1.default.resolve('/backend/src/public' + post.imgPost));
-        fs_extra_1.unlink(path_1.default.resolve('/backend/src/public' + post.imgUser));
+        fs_extra_1.unlink(path_1.default.resolve(post.imgPath));
         return res.status(200).json({ 'message': 'post deleted' });
     }
     return res.status(400).json({ 'message': 'error' });

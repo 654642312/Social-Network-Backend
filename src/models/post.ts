@@ -1,26 +1,21 @@
 import { model, Schema, Document  } from 'mongoose'
 
 export interface IPost extends Document {
-   userName: string
+   userId: string
    description: string
-   imgUser: string
-   imgPost: string
+   imgPath: string
 }
 
 const PostSchema = new Schema({
-   username: {
+   userId: {
       type: String,
-      unique: true,
       required: true,
+      unique: true
    },
    description: {
       type: String,
    },
-   imgUser: {
-      type: String,
-      required: true
-   },
-   imgPost: {
+   imgPath: {
      type: String,
      required: true
    }

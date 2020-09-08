@@ -7,6 +7,4 @@ router.get('/special', passport.authenticate('jwt', {session: false}),
     res.send('success');
 });
 
-
-
 export default router;

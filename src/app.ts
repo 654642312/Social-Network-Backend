@@ -29,6 +29,6 @@ app.use(AuthRouter)
 app.use(specialRoutes)
 app.use(postRoute)
 
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.resolve('public/uploads')))
 
 export default app;

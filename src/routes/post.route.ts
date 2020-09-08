@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import multer from '../multer/multer'
 import { 
     getPosts, 
     getOnePost,
@@ -9,11 +10,11 @@ import {
 
 const router: Router = Router()
 
-router.route('api/create-post')
+router.route('/api/post')
     .get(getPosts)
-    .post(createPost)
+    .post(multer.single('imgPost'), createPost)
 
-router.route('api/create-post/:id')
+router.route('/api/post/:id')
     .get(getOnePost)
     .put(updatePost)
     .delete(deletePost)

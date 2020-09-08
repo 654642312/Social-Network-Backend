@@ -2,19 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
 const PostSchema = new mongoose_1.Schema({
-    username: {
+    userId: {
         type: String,
-        unique: true,
         required: true,
+        unique: true
     },
     description: {
         type: String,
     },
-    imgUser: {
-        type: String,
-        required: true
-    },
-    imgPost: {
+    imgPath: {
         type: String,
         required: true
     }

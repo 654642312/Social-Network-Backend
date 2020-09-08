@@ -17,17 +17,15 @@ export const getOnePost = async (req: Request, res: Response): Promise<Response>
 }
 
 export const createPost = async (req: Request, res: Response): Promise<Response> => {
-    const { 
-        username,
-        description,
-        imgUser,
-        imgPost
-    } = req.body
+    console.log(req.body);
+    const { userId, description } = req.body
 
-    const imagePath: string = '/uploads/' + req.file.fieldname
+    const imgPath: string = '/uploads/' + req.file.filename
 
     const newPost: IPost = new Post({
-        username, description, imgUser, imgPost
+        userId, 
+        description, 
+        imgPath
     })
 
     await newPost.save()
@@ -47,8 +45,7 @@ export const updatePost = async (req: Request, res: Response): Promise<Response>
 export const deletePost = async (req: Request, res: Response): Promise<Response> => {
     const post: IPost | null = await Post.findByIdAndDelete(req.params.id)
     if(post !== null){
-        unlink(path.resolve('/backend/src/public' + post.imgPost))
-        unlink(path.resolve('/backend/src/public' + post.imgUser))
+        unlink(path.resolve(post.imgPath))
         return res.status(200).json({'message': 'post deleted'})
     }
     return res.status(400).json({'message': 'error'})
