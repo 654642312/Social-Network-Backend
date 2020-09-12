@@ -12,6 +12,8 @@ const path_1 = __importDefault(require("path"));
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
 const special_routes_1 = __importDefault(require("./routes/special.routes"));
 const post_route_1 = __importDefault(require("./routes/post.route"));
+const like_route_1 = __importDefault(require("./routes/like.route"));
+const dislike_route_1 = __importDefault(require("./routes/dislike.route"));
 const app = express_1.default();
 app.set('port', process.env.PORT || 3000);
 app.use(morgan_1.default('dev'));
@@ -26,5 +28,7 @@ app.get('/', (req, res) => {
 app.use(auth_routes_1.default);
 app.use(special_routes_1.default);
 app.use(post_route_1.default);
+app.use(like_route_1.default);
+app.use(dislike_route_1.default);
 app.use(express_1.default.static(path_1.default.resolve('public/uploads')));
 exports.default = app;

@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import multer from '../multer/multer'
+import multer from '../libs/multer'
 import { 
     getPosts, 
     getOnePost,

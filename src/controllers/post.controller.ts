@@ -20,7 +20,7 @@ export const createPost = async (req: Request, res: Response): Promise<Response>
     console.log(req.body);
     const { userId, description } = req.body
 
-    const imgPath: string = '/uploads/' + req.file.filename
+    const imgPath: string = req.file.filename
 
     const newPost: IPost = new Post({
         userId, 
@@ -33,11 +33,10 @@ export const createPost = async (req: Request, res: Response): Promise<Response>
 }
 
 export const updatePost = async (req: Request, res: Response): Promise<Response> => {
-    const post = await Post.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-        { new: true }
-    )
+   
+    const { description } = req.body
+
+    const post = await Post.findByIdAndUpdate(req.params.id, { description })
     return res.status(200).json({'message': 'updated successfully'})
 }
 
@@ -45,7 +44,7 @@ export const updatePost = async (req: Request, res: Response): Promise<Response>
 export const deletePost = async (req: Request, res: Response): Promise<Response> => {
     const post: IPost | null = await Post.findByIdAndDelete(req.params.id)
     if(post !== null){
-        unlink(path.resolve(post.imgPath))
+        unlink(path.resolve('./public/uploads/' + post.imgPath))
         return res.status(200).json({'message': 'post deleted'})
     }
     return res.status(400).json({'message': 'error'})

@@ -30,7 +30,7 @@ exports.getOnePost = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 exports.createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.body);
     const { userId, description } = req.body;
-    const imgPath = '/uploads/' + req.file.filename;
+    const imgPath = req.file.filename;
     const newPost = new post_1.default({
         userId,
         description,
@@ -40,13 +40,14 @@ exports.createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     return res.status(200).json({ 'message': 'save successfully' });
 });
 exports.updatePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const post = yield post_1.default.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const { description } = req.body;
+    const post = yield post_1.default.findByIdAndUpdate(req.params.id, { description });
     return res.status(200).json({ 'message': 'updated successfully' });
 });
 exports.deletePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const post = yield post_1.default.findByIdAndDelete(req.params.id);
     if (post !== null) {
-        fs_extra_1.unlink(path_1.default.resolve(post.imgPath));
+        fs_extra_1.unlink(path_1.default.resolve('./public/uploads/' + post.imgPath));
         return res.status(200).json({ 'message': 'post deleted' });
     }
     return res.status(400).json({ 'message': 'error' });
